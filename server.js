@@ -26,9 +26,15 @@ app.use('/api/store', storeRoutes);
 
 // Serve static files in production
 const clientBuildPath = path.join(__dirname, 'client', 'build');
-
 app.use(express.static(clientBuildPath));
-app.get('*', (req, res) => {
+
+// Serve React app for /store/:slug route
+app.get('/store/:slug', (req, res) => {
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
+});
+
+// Optionally handle other routes (if needed)
+app.get('/other-route', (req, res) => {
   res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
